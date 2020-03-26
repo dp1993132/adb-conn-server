@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>dppppp</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.2/axios.js"></script>
+</head>
+<body>
+<div class="center">
+    <div id="phone" class="phone">
+        <canvas id="canvas" ref="canvas" width="375" height="812"  alt=""></canvas>
+        <div class="btn-home" @click="home()"></div>
+        <div class="btn-on" @click="onOff()"></div>
+    </div>
+
+</div>
+</body>
+<style>
+    .center {
+        display: flex;
+        align-items: center;
+        width: 100vw;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .phone{
+        position: relative;
+        border:1px solid #f00;
+        border-radius: 0.5em;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+    .phone canvas {
+        border:1px solid #f00;
+        margin:1em;
+    }
+    .btn-home {
+        width: 3.5em;
+        height: 3.5em;
+        border-radius: 50%;
+        border:1px solid #f00;
+        margin-bottom: 1em;
+    }
+    .btn-on {
+        width: 10px;
+        height: 50px;
+        border:1px solid #f00;
+        margin-bottom: 1em;
+        position: absolute;
+        left: 100%;
+        top:100px;
+    }
+</style>
+<script src="method.js"></script>
+<script>
+    var cvs
+    var ctx
+    app = new Vue({
+        el:"#phone",
+        data:{
+            name:"111"
+        },
+        methods: {
+            onOff (){
+                axios.get("/on-off").then(
+                    setTimeout(()=>renderScreen(ctx,cvs),1000)
+                )
+            },
+            home(){
+                axios.get("/input/key?key=3").then(
+                    renderScreen(ctx,cvs)
+                )
+            },
+            render(){
+                setTimeout(function () {
+                    renderScreen(ctx,cvs)
+                },1000)
+            }
+        },
+        mounted(){
+            cvs = document.getElementById("canvas")
+            ctx = cvs.getContext('2d')
+
+            renderScreen(ctx,cvs)
+            time.setInterval(function () {
+            })
+        }
+    })
+</script>
+</html>
